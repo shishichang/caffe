@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package common;
+message MsgHeader{
+    fixed32            version     = 1;        // protocol version, currently 1
+    fixed32            type        = 2;        // msg type
+}
+
+enum MsgRetCode
+{
+    ERR_UNSET                               = 0;
+    ERR_SUCC                                = 1;          // the img is succesly processed, no matter whether the img has faces or not
+    ERR_AGAIN                               = 2;          // device or resource is now busy, try again later
+    ERR_PERM                                = 3;          // operation not permitted
+    ERR_BADF                                = 4;          // bad file
+    ERR_IO                                  = 5;          // I/O error
+    ERR_INVAL                               = 6;          // invalid argument
+    ERR_TIME                                = 7;          // timer expired
+    ERR_NOENT                               = 8;          // no such file or directory
+    ERR_FEATURE_DIR_NOT_EXIST               = 1009;       // the feature.pkl does not exist
+    ERR_FEATURE_IS_NONE                     = 1010;       // the input path of feature package is none
+    ERR_TOTAL_IMGID_Not_EXISTS              = 1011;       // the imgid in FaceRequest or FaceBatchRequest do not exists 
+    ERR_IMGID_NOT_EXISTS                    = 1012;       // the imgid in PicInfoRequest do not exists
+    ERR_IMAGE_DIMENSION_WRONG               = 1013;       // the dimension of input img is 1 or >4
+    ERR_NO_FEATURE_IN_THE_FEATURE_PACKAGE   = 1014;       // the server failed to add features in feature package
+    ERR_NO_INPUT                            = 1015;       // the FaceBatchRequest do not supply images
+    ERR_OTHER                               = 9999;       // others
+}
+
+message RequestCommon
+{
+    string             appid       = 1;
+    bytes              tracer_id   = 2;
+    uint64             timeout_ms  = 3;    
+}
+
+message ReplyCommon
+{
+    string                appid      = 1;
+    bytes                 tracer_id  = 2;
+    uint64                timeout_ms = 3;
+    MsgRetCode            state      = 4;
+    string                desc       = 5;        // error details desc, optional
+}
