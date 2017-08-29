@@ -438,6 +438,7 @@ message ParamSpec {
 // Update the next available ID when you add a new LayerParameter field.
 //
 // LayerParameter next available layer-specific ID: 147 (last added: recurrent_param)
+// LayerParameter next available layer-specific ID: 148 (last added: shufflechannel_param)
 message LayerParameter {
   optional string name = 1; // the layer name
   optional string type = 2; // the layer type
@@ -542,8 +543,12 @@ message LayerParameter {
   optional TileParameter tile_param = 138;
   optional VideoDataParameter video_data_param = 207;
   optional WindowDataParameter window_data_param = 129;
+  optional ShuffleChannelParameter shuffle_channel_param = 147;
 }
 
+message ShuffleChannelParameter {
+  optional uint32 group = 1 [default = 1]; // The number of group
+}
 // Message that stores parameters used to apply transformation
 // to the data layer's data
 message TransformationParameter {
